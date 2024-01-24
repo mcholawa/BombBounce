@@ -46,8 +46,8 @@ public class BombController : MonoBehaviour
                 // Reset cooldown time, activate gravity, and reset velocity to zero
                 isCooldown = false;
                 cooldownLeft = cooldownTime;
-                rb.gravityScale = 0.1f; // Reset gravity to default
-                rb.velocity = Vector2.zero; // Reset velocity to zero
+                rb.gravityScale = 1f; // Reset gravity to default
+                //rb.velocity = Vector2.zero; // Reset velocity to zero
             }
         }
     }
@@ -66,7 +66,13 @@ public class BombController : MonoBehaviour
         // Reset velocity to zero to stop immediately
         rb.velocity = Vector2.zero;
     }
-
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+        Destroy(gameObject);
+        }
+    }
     void StartCooldown()
     {
         // Set the cooldown flag to true

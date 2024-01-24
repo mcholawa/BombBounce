@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expansionSpeed: 7
   duration: 1.5
-  blastForce: 7
+  blastForce: 5
   playerBallTag: Player
 --- !u!58 &42887551598854443
 CircleCollider2D:

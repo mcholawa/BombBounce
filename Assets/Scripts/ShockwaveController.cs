@@ -23,13 +23,13 @@ public class ShockwaveController : MonoBehaviour
         // Expand the shockwave
         while (elapsedTime < duration)
         {
-            transform.localScale = Vector3.Lerp(initialScale, initialScale * 2f, elapsedTime / duration);
+            transform.localScale = Vector3.Lerp(initialScale, initialScale * 4f, elapsedTime / duration);
             elapsedTime += Time.deltaTime * expansionSpeed;
             yield return null;
         }
 
         // Ensure the shockwave reaches its full size
-        transform.localScale = initialScale * 2f;
+        transform.localScale = initialScale * 4f;
 
         // Wait for a short moment
         yield return new WaitForSeconds(0.2f);
