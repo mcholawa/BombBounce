@@ -9,7 +9,7 @@ public class BombController : MonoBehaviour
     public float cooldownLeft;
     private bool isCooldown = false;
     private Rigidbody2D rb;
-
+    private int clickCount = 0; // Counter for clicks
     void Start()
     {
         // Get the Rigidbody2D component on Start
@@ -30,7 +30,12 @@ public class BombController : MonoBehaviour
             {
                 // The bomb was clicked
                 HandleClick();
-
+                 // Increment the click count // CLOUSE FOR MAX clickCount
+                clickCount++;
+                if (clickCount >= 3)
+                {
+                    Destroy(gameObject);
+                }
                 // Start the cooldown timer
                 StartCooldown();
             }
