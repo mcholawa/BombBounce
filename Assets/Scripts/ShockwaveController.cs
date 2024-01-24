@@ -74,6 +74,7 @@ public class ShockwaveController : MonoBehaviour
             // Apply the force to the player ball
             playerRigidbody.AddForce(adjustedForce * forceDirection, ForceMode2D.Impulse);
             playerRigidbody.gravityScale = currentGravityScale;
+            Destroy(gameObject);
         }
 
         // You can add other actions here if needed
