@@ -10,17 +10,21 @@ public class GameManager : MonoBehaviour
 
     public GameObject ballPrefab;
     public GameObject bombPrefab; 
+    public GameObject coinPrefab; 
     public float scoringMultiplier = 1f;
-    public TextMeshProUGUI scoreText;  // Assign your UI text element for displaying the score
-
+    public TextMeshProUGUI scoreText; 
+    public TextMeshProUGUI coinText;
     private GameObject ballInstance;
     private float timer = 0f;
     private int score = 0;
+    public int coin = 0;
      private bool isSpawningBombs = false;
+     private bool isSpawningCoins = false;
     void Start()
     {
         StartGame();
         StartBombSpawning();
+        StartCoinSpawning();
     }
 void Awake()
     {
@@ -57,6 +61,14 @@ void Awake()
             scoreText.text = "Score: " + score;
         }
     }
+     void UpdateCoinUI()
+    {
+        // Update the UI with the current score
+        if (coinText != null)
+        {
+            coinText.text = "Coins: " + coin;
+        }
+    }
     //RESTARTING AFTER THE GAME IS OVER
     public void RestartGame()
     {
@@ -73,6 +85,7 @@ void Awake()
 
         // Start a new game
         StopBombSpawning();
+        StopCoinSpawning();
        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     //INITIAL SETUP
@@ -90,7 +103,7 @@ void Awake()
             StartCoroutine(SpawnBombsRoutine());
         }
     }
-
+    
     void StopBombSpawning()
     {
         if (isSpawningBombs)
@@ -112,6 +125,40 @@ void Awake()
             float interval = Random.Range(0.3f, 1f);
             yield return new WaitForSeconds(interval);
         }
+    }
+    //COINSPAWNING
+        void StartCoinSpawning()
+        {
+            if (!isSpawningCoins)
+            {
+                isSpawningCoins = true;
+                StartCoroutine(SpawnCoinsRoutine());
+            }
+        }
+        void StopCoinSpawning()
+    {
+        if (isSpawningCoins)
+        {
+            isSpawningCoins = false;
+            StopCoroutine(SpawnCoinsRoutine());
+        }
+    }
+    IEnumerator SpawnCoinsRoutine()
+    {
+        while (isSpawningCoins)
+        {
+            // Adjust the position of bombs as needed
+            Vector3 coinPosition = new Vector3(Random.Range(-2f, 2f), 6f, 0f);
+            Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+
+            // Adjust the interval between bomb spawns
+            float interval = Random.Range(1f, 3f);
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    public void coinCollected(){
+        coin++;
+        UpdateCoinUI();
     }
 
 }
