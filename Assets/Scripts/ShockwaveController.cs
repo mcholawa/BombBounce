@@ -70,7 +70,11 @@ public class ShockwaveController : MonoBehaviour
             // Calculate the force magnitude based on distance from the bomb
             float distance = Vector2.Distance(other.transform.position, transform.position);
             float adjustedForce = blastForce / distance;
+        // Calculate the rotation speed based on the force applied
+            float rotationSpeed = adjustedForce * 10f; // You can adjust this multiplier as needed
 
+        // Apply the rotation to the player ball
+            playerRigidbody.angularVelocity = rotationSpeed;
             // Apply the force to the player ball
             playerRigidbody.AddForce(adjustedForce * forceDirection, ForceMode2D.Impulse);
             playerRigidbody.gravityScale = currentGravityScale;
