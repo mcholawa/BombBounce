@@ -10,6 +10,11 @@ public class BallController : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
+        // Apply an initial small rotation to the ball
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+    // Apply an initial angular velocity to the ball in 2D
+    rb.angularVelocity = Random.Range(-100f, 100f); // Adjust the range as needed
     }
 
     void OnTriggerEnter2D(Collider2D collision)
