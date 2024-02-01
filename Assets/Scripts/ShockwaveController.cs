@@ -8,7 +8,7 @@ public class ShockwaveController : MonoBehaviour
     public float duration = 1.5f; // Adjust the duration of the shockwave
     public float blastForce = 10f; // Adjust the force applied to the player ball
     public string playerBallTag = "Player"; // Set this to the tag of your player ball
-
+    public float sizeOfBlast = 2f;
     private void Start()
     {
         // Start the shockwave animation
@@ -23,13 +23,13 @@ public class ShockwaveController : MonoBehaviour
         // Expand the shockwave
         while (elapsedTime < duration)
         {
-            transform.localScale = Vector3.Lerp(initialScale, initialScale * 4f, elapsedTime / duration);
+            transform.localScale = Vector3.Lerp(initialScale, initialScale * sizeOfBlast, elapsedTime / duration);
             elapsedTime += Time.deltaTime * expansionSpeed;
             yield return null;
         }
 
         // Ensure the shockwave reaches its full size
-        transform.localScale = initialScale * 4f;
+        transform.localScale = initialScale * sizeOfBlast;
 
         // Wait for a short moment
         yield return new WaitForSeconds(0.2f);
