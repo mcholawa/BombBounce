@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject ballPrefab;
     public GameObject bombPrefab; 
     public GameObject coinPrefab; 
+    public GameObject powerupPrefab; 
     public float scoringMultiplier = 1f;
     public TextMeshProUGUI scoreText; 
     public TextMeshProUGUI coinText;
@@ -112,17 +113,28 @@ void Awake()
             StopCoroutine(SpawnBombsRoutine());
         }
     }
-
+//Spawning Bombs AND POWERUPS
     IEnumerator SpawnBombsRoutine()
     {
+          Vector3 bombPosition;
+          float interval = Random.Range(0.3f, 1f);;
         while (isSpawningBombs)
         {
-            // Adjust the position of bombs as needed
-            Vector3 bombPosition = new Vector3(Random.Range(-2f, 2f), 6f, 0f);
-            Instantiate(bombPrefab, bombPosition, Quaternion.identity);
-
+            // Adjust the position of bombs as needed  
+        if (score % 5 == 0 && score != 0)
+        {
+           bombPosition  = new Vector3(Random.Range(-2f, 2f), 6f, 0f);
+           Instantiate(powerupPrefab, bombPosition, Quaternion.identity);
+           interval = 1f;
+        }
+        else
+        {
+           bombPosition = new Vector3(Random.Range(-2f, 2f), 6f, 0f);
+             Instantiate(bombPrefab, bombPosition, Quaternion.identity);
+             interval = Random.Range(0.4f, 1.1f);
+        }
             // Adjust the interval between bomb spawns
-            float interval = Random.Range(0.3f, 1f);
+            
             yield return new WaitForSeconds(interval);
         }
     }
@@ -160,5 +172,24 @@ void Awake()
         coin++;
         UpdateCoinUI();
     }
-
+    public void powerUpCollected(PowerupController.PowerupType powerupType){
+         switch (powerupType)
+        {
+            case PowerupController.PowerupType.Type1:
+                // Do something for Type1 powerup
+                Debug.Log("Type1 powerup collected");
+                break;
+            case PowerupController.PowerupType.Type2:
+                // Do something for Type2 powerup
+                Debug.Log("Type2 powerup collected");
+                break;
+            case PowerupController.PowerupType.Type3:
+                // Do something for Type3 powerup
+                Debug.Log("Type3 powerup collected");
+                break;
+            default:
+                Debug.LogError("Unhandled powerup type!");
+                break;
+        }
+    }
 }
