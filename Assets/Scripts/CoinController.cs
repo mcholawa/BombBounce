@@ -29,8 +29,14 @@ public class CoinController : MonoBehaviour
 ////////////////////////////////////////////////
     void HandleClick()
     {
-
         GameManager.Instance.coinCollected();
+    }
+     void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+        Destroy(gameObject);
+        }
     }
 
 }
